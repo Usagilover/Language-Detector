@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signal Wire — Language Decoder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>HELLO</span><span>·</span><span>BONJOUR</span><span>·</span><span>HOLA</span><span>·</span>
+      <span>GUTEN TAG</span><span>·</span><span>你好</span><span>·</span><span>こんにちは</span><span>·</span>
+      <span>ПРИВЕТ</span><span>·</span><span>مرحبا</span><span>·</span><span>नमस्ते</span><span>·</span>
+      <span>CIAO</span><span>·</span><span>OLÁ</span><span>·</span><span>MERHABA</span><span>·</span>
+      <span>XIN CHÀO</span><span>·</span><span>SAWUBONA</span><span>·</span>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <header class="masthead">
+      <p class="eyebrow">WIRE SERVICE — {{ langs|length }} LANGUAGES ON THE LINE</p>
+      <h1>SIGNAL&nbsp;DECODER</h1>
+      <p class="sub">Type — or paste — a message below and send it down the line. The decoder reads the
+        shape of the text, letter by letter, and stamps it with the language it's most likely written in.</p>
+    </header>
+
+    <section class="console" id="console">
+      <div class="tape">
+        <label for="input" class="tape__label">INCOMING MESSAGE</label>
+        <textarea id="input" class="tape__field" rows="4" maxlength="2000"
+          placeholder="Écrivez ici, schreiben Sie hier, escribe aquí, اكتب هنا…"></textarea>
+        <div class="tape__row">
+          <span class="tape__count"><span id="charCount">0</span> / 2000</span>
+          <button id="sendBtn" class="btn" type="button">
+            <span class="btn__label">TRANSMIT</span>
+            <span class="btn__arrow">»</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="result" class="telegram telegram--empty">
+        <p class="telegram__hint">Awaiting transmission…</p>
+      </div>
+    </section>
+
+    <section class="languages" aria-label="Supported languages">
+      <p class="languages__title">LANGUAGES ON THE LINE</p>
+      <div class="languages__grid">
+        {% for l in langs %}
+        <span class="languages__chip"><b>{{ l.code }}</b>{{ l.name }}</span>
+        {% endfor %}
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p>Model: char-level TF-IDF + calibrated linear SVM, trained on the
+        <span>papluca/language-identification</span> dataset.</p>
+    </footer>
+  </main>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
